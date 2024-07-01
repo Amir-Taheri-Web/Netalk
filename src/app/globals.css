@@ -16,9 +16,25 @@
 }
 
 .cl-socialButtonsIconButton {
-  background-color: #1F1F22;
+  background-color: #1f1f22;
 }
 
 .cl-socialButtonsIconButton__github img {
   filter: invert(1);
+}
+
+@media only screen and (max-width: 640px) {
+  .cl-organizationSwitcherTrigger .cl-internal-3gh7hq {
+    display: none;
+  }
+
+  .cl-internal-1dhljuu {
+    gap: 0;
+  }
+
+  .cl-organizationSwitcherPopoverCard {
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
 }

@@ -1,6 +1,9 @@
 import Image from "next/image";
 import logo from "@/public/assets/logo.png";
 import Link from "next/link";
+import { OrganizationSwitcher, SignOutButton } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
+import logout from "@/public/assets/logout.svg";
 
 const TopNav = () => {
   return (
@@ -18,8 +21,22 @@ const TopNav = () => {
         </Link>
       </h1>
 
-      <div>
-        <span>clerk goes here</span>
+      <div className="flex items-center">
+        <div className="sm:hidden">
+          <SignOutButton redirectUrl="/sign-in">
+            <div className="flex gap-4 p-4 rounded-lg cursor-pointer">
+              <Image
+                src={logout}
+                alt="logout icon"
+                width={20}
+                height={20}
+                className="h-auto"
+              />
+              <span className="text-lg max-lg:hidden">Logout</span>
+            </div>
+          </SignOutButton>
+        </div>
+        <OrganizationSwitcher appearance={{ baseTheme: dark }} />
       </div>
     </header>
   );

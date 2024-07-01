@@ -6,6 +6,7 @@ import Link from "next/link";
 import logout from "@/public/assets/logout.svg";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { SignOutButton } from "@clerk/nextjs";
 
 const LeftNav = () => {
   const path: string = usePathname();
@@ -36,16 +37,18 @@ const LeftNav = () => {
           ))}
 
           <li className="mt-auto">
-            <Link href="/" className="flex gap-4 p-4 rounded-lg">
-              <Image
-                src={logout}
-                alt="logout icon"
-                width={25}
-                height={25}
-                className="h-auto"
-              />
-              <span className="text-lg max-lg:hidden">Logout</span>
-            </Link>
+            <SignOutButton redirectUrl="/sign-in">
+              <div className="flex gap-4 p-4 rounded-lg cursor-pointer">
+                <Image
+                  src={logout}
+                  alt="logout icon"
+                  width={25}
+                  height={25}
+                  className="h-auto"
+                />
+                <span className="text-lg max-lg:hidden">Logout</span>
+              </div>
+            </SignOutButton>
           </li>
         </ul>
       </nav>
