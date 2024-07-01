@@ -12,7 +12,7 @@ const LeftNav = () => {
   console.log(path);
 
   return (
-    <aside className="w-[275px] bg-dark-2 px-8 py-12 sticky top-[80px] h-[calc(100vh-80px)]">
+    <aside className="w-[275px] max-lg:w-auto bg-dark-2 px-8 py-12 sticky top-[80px] h-[calc(100vh-80px)] max-sm:hidden">
       <nav className="h-full">
         <ul className="flex flex-col gap-8 h-full">
           {SIDE_LINKS.map((item) => (
@@ -30,7 +30,7 @@ const LeftNav = () => {
                   height={25}
                   className="h-auto"
                 />
-                <span className="text-lg">{item.label}</span>
+                <span className="text-lg max-lg:hidden">{item.label}</span>
               </Link>
             </li>
           ))}
@@ -44,7 +44,7 @@ const LeftNav = () => {
                 height={25}
                 className="h-auto"
               />
-              <span className="text-lg">Logout</span>
+              <span className="text-lg max-lg:hidden">Logout</span>
             </Link>
           </li>
         </ul>
