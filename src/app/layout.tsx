@@ -3,6 +3,7 @@ import { Rubik } from "next/font/google";
 import { TProps } from "@/types/types";
 import "./globals.css";
 import { FC } from "react";
+import AuthProvider from "@/providers/AuthProvider";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -13,11 +14,13 @@ export const metadata: Metadata = {
 
 const RootLayout: FC<TProps> = ({ children }) => {
   return (
-    <html lang="en" className="bg-dark-1">
-      <body className={`${rubik.className} bg-dark-1 text-white`}>
-        {children}
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en" className="bg-dark-1">
+        <body className={`${rubik.className} bg-dark-1 text-white`}>
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 };
 
