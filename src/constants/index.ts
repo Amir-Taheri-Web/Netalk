@@ -1,4 +1,6 @@
-const SIDE_LINKS = [
+import { TSideLinks } from "@/types/types";
+
+const SIDE_LINKS: TSideLinks = [
   { icon: "./assets/home.svg", label: "Home", link: "/" },
   { icon: "./assets/search.svg", label: "Search", link: "/search" },
   { icon: "./assets/heart.svg", label: "Activity", link: "/activity" },
