@@ -14,3 +14,11 @@
 
 @layer utilities {
 }
+
+.cl-socialButtonsIconButton {
+  background-color: #1F1F22;
+}
+
+.cl-socialButtonsIconButton__github img {
+  filter: invert(1);
+}
