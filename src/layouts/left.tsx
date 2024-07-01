@@ -12,9 +12,9 @@ const LeftNav = () => {
   console.log(path);
 
   return (
-    <aside className="w-[275px] bg-dark-2 px-8 py-12 sticky top-[90px] h-[calc(100vh-90px)]">
+    <aside className="w-[275px] bg-dark-2 px-8 py-12 sticky top-[80px] h-[calc(100vh-80px)]">
       <nav className="h-full">
-        <ul className="flex flex-col gap-4 h-full">
+        <ul className="flex flex-col gap-8 h-full">
           {SIDE_LINKS.map((item) => (
             <li key={item.label}>
               <Link

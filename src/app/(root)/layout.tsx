@@ -9,7 +9,7 @@ const MainLayout: FC<TProps> = ({ children }) => {
   return (
     <div className="flex flex-col w-full">
       <TopNav />
-      <div className="mt-[90px] flex justify-between w-full">
+      <div className="mt-[80px] relative flex justify-between w-full">
         <LeftNav />
         <main>{children}</main>
         <RightNav />

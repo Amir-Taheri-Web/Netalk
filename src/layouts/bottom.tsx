@@ -1,5 +1,5 @@
 const BottomNav = () => {
-  return <div>BottomNav</div>;
+  return <div className="h-[1000px]">BottomNav</div>;
 };
 
 export default BottomNav;
