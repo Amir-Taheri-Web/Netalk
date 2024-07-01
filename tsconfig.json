@@ -30,7 +30,8 @@
       "@/providers/*": ["./src/providers/*"],
       "@/types/*": ["./src/types/*"],
       "@/utils/*": ["./src/utils/*"],
-      "@/validations/*": ["./src/validations/*"]
+      "@/validations/*": ["./src/validations/*"],
+      "@/layouts/*": ["./src/layouts/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

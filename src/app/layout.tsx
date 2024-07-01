@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import { TProps } from "@/types/types";
 import "./globals.css";
+import { FC } from "react";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -10,10 +11,12 @@ export const metadata: Metadata = {
   description: "Share your thoughts and communicate with others",
 };
 
-const RootLayout = ({ children }: TProps) => {
+const RootLayout: FC<TProps> = ({ children }) => {
   return (
-    <html lang="en">
-      <body className={rubik.className}>{children}</body>
+    <html lang="en" className="bg-dark-1">
+      <body className={`${rubik.className} bg-dark-1 text-white`}>
+        {children}
+      </body>
     </html>
   );
 };
