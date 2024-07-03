@@ -32,6 +32,7 @@
       "@/utils/*": ["./src/utils/*"],
       "@/validations/*": ["./src/validations/*"],
       "@/layouts/*": ["./src/layouts/*"],
+      "@/models/*": ["./src/models/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
