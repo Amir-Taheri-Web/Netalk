@@ -40,6 +40,11 @@ const userSchema = new Schema<IUser, TUserModel>({
       ref: "Thread",
     },
   ],
+
+  onboarding: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const User: TUserModel =

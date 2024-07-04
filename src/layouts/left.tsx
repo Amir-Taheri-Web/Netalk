@@ -10,7 +10,6 @@ import { SignOutButton } from "@clerk/nextjs";
 
 const LeftNav = () => {
   const path: string = usePathname();
-  console.log(path);
 
   return (
     <aside className="w-[275px] max-lg:w-auto bg-dark-2 px-8 py-12 sticky top-[80px] h-[calc(100vh-80px)] max-sm:hidden">

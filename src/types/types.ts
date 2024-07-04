@@ -18,6 +18,16 @@ export interface IUser {
   bio: string;
   communities: Types.ObjectId;
   threads: Types.ObjectId;
+  onboarding: boolean;
 }
 
 export type TUserModel = Model<IUser>;
+
+export type TOnboardingProps = {
+  userInfo: {
+    imageUrl: string;
+    name: string;
+    username: string;
+    bio: string;
+  };
+};
