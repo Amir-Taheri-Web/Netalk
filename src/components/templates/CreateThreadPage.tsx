@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,9 +16,13 @@ import {
 import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { createThread } from "@/actions/thread.action";
+import { useUser } from "@clerk/nextjs";
+import toast from "react-hot-toast";
 
 const CreateThreadPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { user } = useUser();
 
   const form = useForm<z.infer<typeof threadValidation>>({
     resolver: zodResolver(threadValidation),
@@ -28,9 +31,20 @@ const CreateThreadPage = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof threadValidation>) => {
+  const onSubmit = async (values: z.infer<typeof threadValidation>) => {
     setIsLoading(true);
-    console.log(values);
+
+    try {
+      await createThread({ userId: user?.id || "", text: values.content });
+
+      toast.success("Thread created");
+      form.reset();
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

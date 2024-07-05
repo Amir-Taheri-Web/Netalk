@@ -51,3 +51,8 @@ export interface IThread {
 }
 
 export type TThreadModel = Model<IThread>;
+
+export type TCreateThreadProps = {
+  userId: string;
+  text: string;
+};

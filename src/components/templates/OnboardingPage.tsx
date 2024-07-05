@@ -80,17 +80,19 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
       }
     }
 
-    console.log(values);
+    try {
+      await updateUser({ ...values, userId: userInfo.userId || "" });
+      user?.setProfileImage({ file: values.imageUrl });
 
-    await updateUser({ ...values, userId: userInfo.userId || "" });
-    user?.setProfileImage({file: values.imageUrl});
+      toast.success("Profile updated");
 
-    setIsLoading(false);
-
-    toast.success("Profile updated");
-
-    router.push("/");
-
+      router.push("/");
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
