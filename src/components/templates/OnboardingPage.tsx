@@ -4,13 +4,12 @@ import { userValidation } from "@/validations/user.validation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { TOnboardingProps } from "@/types/types";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -19,8 +18,22 @@ import {
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { Textarea } from "../ui/textarea";
+import { useUploadThing } from "@/utils/uploadThing";
+import { isBase64Image } from "@/utils";
+import { updateUser } from "@/actions/user.action";
+import { cn } from "@/lib/utils";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
+  const [files, setFiles] = useState<File[]>();
+  const { startUpload } = useUploadThing("media");
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+  const { user } = useUser();
+
   const form = useForm<z.infer<typeof userValidation>>({
     resolver: zodResolver(userValidation),
     defaultValues: userInfo,
@@ -30,33 +43,76 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
     e: ChangeEvent<HTMLInputElement>,
     fieldChange: (value: string) => void
   ) => {
-    console.log("image handler");
+    e.preventDefault();
+
+    const fileReader = new FileReader();
+
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+
+      setFiles(Array.from(e.target.files));
+
+      if (!file.type.includes("image")) return;
+
+      fileReader.onload = async (event) => {
+        const imageDataUrl = event.target?.result?.toString() || "";
+
+        fieldChange(imageDataUrl);
+      };
+
+      fileReader.readAsDataURL(file);
+    }
   };
 
-  const onSubmit = (values: z.infer<typeof userValidation>) => {
+  const onSubmit = async (values: z.infer<typeof userValidation>) => {
+    setIsLoading(true);
+
+    const blob = values.imageUrl;
     console.log(values);
+
+    const hasImageChanged = isBase64Image(blob);
+
+    if (hasImageChanged && files) {
+      const imageResponse = await startUpload(files);
+
+      if (imageResponse && imageResponse[0].url) {
+        values.imageUrl = imageResponse[0].url;
+      }
+    }
+
+    console.log(values);
+
+    await updateUser({ ...values, userId: userInfo.userId || "" });
+    user?.setProfileImage({file: values.imageUrl});
+
+    setIsLoading(false);
+
+    toast.success("Profile updated");
+
+    router.push("/");
+
   };
 
   return (
-    <main className="min-h-screen w-full flex-center">
+    <main className="min-h-screen w-full flex-center p-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 bg-dark-2 max-w-[1000px] p-8 rounded-lg w-full flex flex-col gap-8 m-8"
+          className="space-y-8 bg-dark-2 max-w-[1000px] p-8 rounded-lg w-full flex flex-col gap-8"
         >
           <FormField
             control={form.control}
             name="imageUrl"
             render={({ field }) => (
-              <FormItem className="flex gap-4 items-center">
-                <FormLabel>
+              <FormItem className="relative flex gap-4 items-center flex-wrap">
+                <FormLabel className="w-[140px] h-[140px] relative">
                   {field.value ? (
                     <Image
                       src={field.value}
                       alt="user image"
-                      width={140}
-                      height={140}
-                      className="relative h-auto object-cover rounded-full"
+                      fill
+                      className="size-full object-cover rounded-full !relative"
+                      priority
                     />
                   ) : (
                     <div className="w-[140px] h-[140px] object-cover rounded-full">
@@ -70,7 +126,7 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
                     accept="image/*"
                     placeholder="Choose your avatar"
                     onChange={(e) => imageHandler(e, field.onChange)}
-                    className="bg-transparent border-none outline-none text-main-1 cursor-pointer"
+                    className="bg-transparent border-none outline-none text-main-1 cursor-pointer w-fit"
                   />
                 </FormControl>
                 <FormMessage />
@@ -124,7 +180,12 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="bg-main-1">
+          <Button
+            type="submit"
+            className={cn("bg-main-1 hover:bg-main-1", {
+              "opacity-50": isLoading,
+            })}
+          >
             Submit
           </Button>
         </form>

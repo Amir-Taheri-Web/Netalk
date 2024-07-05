@@ -25,9 +25,18 @@ export type TUserModel = Model<IUser>;
 
 export type TOnboardingProps = {
   userInfo: {
+    userId: string,
     imageUrl: string;
     name: string;
     username: string;
     bio: string;
   };
+};
+
+export type TUserInfoProps = {
+  userId: string,
+  imageUrl: string;
+  name: string;
+  username: string;
+  bio: string;
 };

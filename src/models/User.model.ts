@@ -22,10 +22,7 @@ const userSchema = new Schema<IUser, TUserModel>({
     required: true,
   },
 
-  bio: {
-    type: String,
-    required: true,
-  },
+  bio: String,
 
   communities: [
     {

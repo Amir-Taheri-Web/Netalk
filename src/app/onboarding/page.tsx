@@ -1,15 +1,26 @@
-import { getUser } from "@/actions/user.action";
+import { createUser, getUser } from "@/actions/user.action";
 import OnboardingPage from "@/components/templates/OnboardingPage";
 import { currentUser } from "@clerk/nextjs/server";
 
 const Onboarding = async () => {
   const user = await currentUser();
-  const userData = await getUser(user?.id || "");
+  let userData = await getUser(user?.id || "");
+
+  if (!userData) {
+    userData = await createUser({
+      userId: user?.id || "",
+      imageUrl: user?.imageUrl || "",
+      username: user?.username || "",
+      name: user?.firstName || "",
+      bio: "",
+    });
+  }
 
   const userInfo = {
-    imageUrl: userData?.imageUrl || user?.imageUrl || "",
-    name: userData?.name || user?.firstName || "",
-    username: userData?.username || user?.username || "",
+    userId: userData?.userId || "",
+    imageUrl: userData?.imageUrl || "",
+    name: userData?.name || "",
+    username: userData?.username || "",
     bio: userData?.bio || "",
   };
 
