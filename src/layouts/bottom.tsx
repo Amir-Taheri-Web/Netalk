@@ -18,7 +18,7 @@ const BottomNav = () => {
               <Link
                 href={item.link}
                 className={cn("flex gap-4 p-3 rounded-lg", {
-                  "bg-main-1": path.includes(item.link),
+                  "bg-main-1": path.endsWith(item.link),
                 })}
               >
                 <Image

@@ -1,9 +1,9 @@
 import { getUser } from "@/actions/user.action";
-import HomePage from "@/components/templates/HomePage";
+import CreateThreadPage from "@/components/templates/CreateThreadPage";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-const Home = async () => {
+const CreateThread = async () => {
   const user = await currentUser();
 
   if (!user) redirect("/sign-in");
@@ -12,7 +12,7 @@ const Home = async () => {
 
   if (!userData?.onboarding) redirect("/onboarding");
 
-  return <HomePage />;
+  return <CreateThreadPage />;
 };
 
-export default Home;
+export default CreateThread;

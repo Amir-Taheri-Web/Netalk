@@ -12,7 +12,7 @@ const userValidation = z.object({
     .max(30, { message: "Username can't be more than 30 characters" }),
   bio: z
     .string()
-    .min(13, { message: "Bio must be at least 3 words" })
+    .min(3, { message: "Bio must be at least 3 characters" })
     .max(1000, { message: "Bio can't be more than 100 words" }),
 });
 
