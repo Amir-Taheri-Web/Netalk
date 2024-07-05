@@ -1,4 +1,5 @@
 import { getUser } from "@/actions/user.action";
+import HomePage from "@/components/templates/HomePage";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
@@ -8,7 +9,7 @@ const Home = async () => {
 
   if (!userData?.onboarding) redirect("/onboarding");
 
-  return <div>Home</div>;
+  return <HomePage />;
 };
 
 export default Home;

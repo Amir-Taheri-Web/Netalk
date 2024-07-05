@@ -16,8 +16,8 @@ export interface IUser {
   name: string;
   username: string;
   bio: string;
-  communities: Types.ObjectId;
-  threads: Types.ObjectId;
+  communities: Types.ObjectId[];
+  threads: Types.ObjectId[];
   onboarding: boolean;
 }
 
@@ -25,7 +25,7 @@ export type TUserModel = Model<IUser>;
 
 export type TOnboardingProps = {
   userInfo: {
-    userId: string,
+    userId: string;
     imageUrl: string;
     name: string;
     username: string;
@@ -34,9 +34,20 @@ export type TOnboardingProps = {
 };
 
 export type TUserInfoProps = {
-  userId: string,
+  userId: string;
   imageUrl: string;
   name: string;
   username: string;
   bio: string;
 };
+
+export interface IThread {
+  text: string;
+  createdAt: Date;
+  author: Types.ObjectId;
+  parentId: string;
+  children: Types.ObjectId[];
+  community: Types.ObjectId;
+}
+
+export type TThreadModel = Model<IThread>;
