@@ -25,12 +25,14 @@ const createThread = async ({ userId, text }: TCreateThreadProps) => {
   }
 };
 
-const fetchThreads = async () => {
+const fetchThreads = async (amount: number, skipAmount: number) => {
   try {
     connectDB();
 
     const threads = await Thread.find({ parentId: { $in: [null, undefined] } })
-      .sort({createdAt: "desc"})
+      .sort({ createdAt: "desc" })
+      .limit(amount)
+      .skip(skipAmount)
       .populate({
         path: "author",
         model: User,
@@ -45,7 +47,13 @@ const fetchThreads = async () => {
         },
       });
 
-    return threads;
+    const threadCount = await Thread.countDocuments({
+      parentId: { $in: [null, undefined] },
+    });
+
+    const isNext = threadCount > threads.length + skipAmount;
+
+    return JSON.stringify({ threads, isNext });
   } catch (error) {
     console.log("Connection to server failed", error);
   }

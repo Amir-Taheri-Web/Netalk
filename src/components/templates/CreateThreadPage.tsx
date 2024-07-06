@@ -49,7 +49,7 @@ const CreateThreadPage = () => {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="flex max-w-[1000px] gap-8 flex-1 bg-dark-2 p-8 rounded-lg flex-col justify-start">
+      <div className="flex max-w-[1000px] gap-8 flex-1 bg-dark-2 p-8 max-sm:p-6 rounded-lg flex-col justify-start">
         <h2 className="main-title">Create Thread</h2>
 
         <Form {...form}>

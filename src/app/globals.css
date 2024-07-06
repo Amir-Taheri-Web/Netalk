@@ -22,7 +22,7 @@
   }
 
   .main-title {
-    @apply text-4xl font-bold;
+    @apply text-4xl font-bold max-sm:text-3xl;
   }
 }
 
@@ -36,6 +36,26 @@
 
 input[type="file"]::file-selector-button {
   color: #ffffff;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #121417;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #877eff;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #877eff;
 }
 
 @media only screen and (max-width: 640px) {
