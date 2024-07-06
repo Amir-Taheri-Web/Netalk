@@ -20,6 +20,10 @@
   .input {
     @apply bg-dark-4 border-none outline-none ring-0 text-white text-base placeholder:!text-white placeholder:opacity-60;
   }
+
+  .main-title {
+    @apply text-4xl font-bold;
+  }
 }
 
 .cl-socialButtonsIconButton {
@@ -30,7 +34,7 @@
   filter: invert(1);
 }
 
-input[type=file]::file-selector-button {
+input[type="file"]::file-selector-button {
   color: #ffffff;
 }
 

@@ -56,3 +56,7 @@ export type TCreateThreadProps = {
   userId: string;
   text: string;
 };
+
+export type TThreadCardProps = {
+  thread: any;
+};

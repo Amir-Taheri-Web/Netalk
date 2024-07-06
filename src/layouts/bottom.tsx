@@ -10,7 +10,7 @@ const BottomNav = () => {
   const path = usePathname();
 
   return (
-    <footer className="fixed bottom-0 left-0 w-full sm:hidden bg-dark-2 p-4">
+    <footer className="fixed bottom-0 left-0 w-full sm:hidden bg-dark-2 p-3">
       <nav>
         <ul className="flex flex-row justify-between gap-2">
           {SIDE_LINKS.map((item) => (
@@ -24,8 +24,8 @@ const BottomNav = () => {
                 <Image
                   src={item.icon}
                   alt={item.label}
-                  width={25}
-                  height={25}
+                  width={20}
+                  height={20}
                   className="h-auto"
                 />
               </Link>

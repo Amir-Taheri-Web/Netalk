@@ -50,7 +50,7 @@ const CreateThreadPage = () => {
   return (
     <div className="w-full flex justify-center">
       <div className="flex max-w-[1000px] gap-8 flex-1 bg-dark-2 p-8 rounded-lg flex-col justify-start">
-        <h2 className="text-4xl font-bold">Create Thread</h2>
+        <h2 className="main-title">Create Thread</h2>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
