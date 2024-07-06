@@ -25,4 +25,30 @@ const createThread = async ({ userId, text }: TCreateThreadProps) => {
   }
 };
 
-export { createThread };
+const fetchThreads = async () => {
+  try {
+    connectDB();
+
+    const threads = await Thread.find({ parentId: { $in: [null, undefined] } })
+      .sort({createdAt: "desc"})
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id userId username imageUrl",
+      })
+      .populate({
+        path: "children",
+        populate: {
+          path: "author",
+          model: User,
+          select: "_id username imageUrl",
+        },
+      });
+
+    return threads;
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
+
+export { createThread, fetchThreads };
