@@ -1,9 +1,11 @@
-import HomePage from "@/components/templates/HomePage";
 import { getUser } from "@/actions/user.action";
+import ThreadPage from "@/components/templates/ThreadPage";
+import { TThreadDetailsProps } from "@/types/types";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { FC } from "react";
 
-const Home = async () => {
+const Thread: FC<TThreadDetailsProps> = async ({ params: { id } }) => {
   const user = await currentUser();
 
   if (!user) redirect("/sign-in");
@@ -12,7 +14,7 @@ const Home = async () => {
 
   if (!userData?.onboarding) redirect("/onboarding");
 
-  return <HomePage />;
+  return <ThreadPage id={id} />;
 };
 
-export default Home;
+export default Thread;

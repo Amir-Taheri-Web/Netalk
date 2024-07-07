@@ -22,7 +22,7 @@ const ThreadCard: FC<TThreadCardProps> = ({ thread }) => {
         <h4 className="font-bold">{thread.author.username}</h4>
         <p>{thread.text}</p>
 
-        <ThreadButtons />
+        <ThreadButtons id={thread._id} />
       </div>
     </li>
   );

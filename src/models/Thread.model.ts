@@ -18,7 +18,7 @@ const threadSchema = new Schema<IThread, TThreadModel>({
     ref: "User",
   },
 
-  parentId: String,
+  parentId: String || null,
 
   children: [
     {

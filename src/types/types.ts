@@ -55,8 +55,25 @@ export type TThreadModel = Model<IThread>;
 export type TCreateThreadProps = {
   userId: string;
   text: string;
+  parentId?: string;
 };
 
 export type TThreadCardProps = {
   thread: any;
+};
+
+export type TThreadDetailsProps = {
+  params: { id: string };
+};
+
+export type TThreadPageProps = {
+  id: string;
+};
+
+export type TThreadButtonsProps = {
+  id: string;
+};
+
+export type TPostCommentProps = {
+  parentId: string;
 };

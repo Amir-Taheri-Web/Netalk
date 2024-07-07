@@ -4,6 +4,7 @@ const protectedRoutes = createRouteMatcher([
   "/",
   "/onboarding",
   "/create-thread",
+  "/thread(.*)"
 ]);
 
 export default clerkMiddleware((auth, req) => {
