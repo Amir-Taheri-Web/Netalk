@@ -21,6 +21,9 @@ const config = {
           1: "#877EFF",
           2: "#FFB620",
         },
+        gray: {
+          1: "#606060"
+        }
       },
       keyframes: {
         "accordion-down": {

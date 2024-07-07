@@ -26,7 +26,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 
-const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
+const OnboardingPage: FC<TOnboardingProps> = ({ userInfo, isEdit }) => {
   const [files, setFiles] = useState<File[]>();
   const { startUpload } = useUploadThing("media");
 
@@ -68,7 +68,6 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
     setIsLoading(true);
 
     const blob = values.imageUrl;
-    console.log(values);
 
     const hasImageChanged = isBase64Image(blob);
 
@@ -81,12 +80,22 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
     }
 
     try {
-      await updateUser({ ...values, userId: userInfo.userId || "" });
+      if (!isEdit) {
+        await updateUser({ ...values, userId: userInfo.userId || "" });
+      } else {
+        await updateUser({
+          ...values,
+          isEdit: true,
+          userId: userInfo.userId || "",
+        });
+      }
       user?.setProfileImage({ file: values.imageUrl });
 
       toast.success("Profile updated");
 
-      router.push("/");
+      if (!isEdit) {
+        router.push("/");
+      }
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);
@@ -96,7 +105,12 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo }) => {
   };
 
   return (
-    <main className="min-h-screen w-full flex-center p-8">
+    <main
+      className={cn("w-full flex-center p-8", {
+        "pt-0": isEdit,
+        "min-h-screen": !isEdit,
+      })}
+    >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

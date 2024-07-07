@@ -1,3 +1,4 @@
+import { User } from "@clerk/nextjs/server";
 import { Model, Types } from "mongoose";
 
 export type TProps = Readonly<{
@@ -31,6 +32,7 @@ export type TOnboardingProps = {
     username: string;
     bio: string;
   };
+  isEdit?: boolean;
 };
 
 export type TUserInfoProps = {
@@ -39,6 +41,7 @@ export type TUserInfoProps = {
   name: string;
   username: string;
   bio: string;
+  isEdit?: boolean;
 };
 
 export interface IThread {
@@ -81,4 +84,14 @@ export type TPostCommentProps = {
 
 export type TThreadCommentsProps = {
   childThreads: any;
+};
+
+export type TProfileProps = {
+  user: any;
+};
+
+export type TProfileTabsProps = {
+  mainThreads: any;
+  replyThreads: any;
+  userInfo: any;
 };
