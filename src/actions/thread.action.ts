@@ -87,6 +87,8 @@ const fetchThread = async (id: string) => {
         },
       });
 
+    thread.children.reverse();
+
     return thread;
   } catch (error) {
     console.log("Connection to server failed", error);
