@@ -3,6 +3,7 @@ import { FC } from "react";
 import ThreadCard from "../modules/ThreadCard";
 import { fetchThread } from "@/actions/thread.action";
 import PostComment from "../modules/PostComment";
+import ThreadComments from "../modules/ThreadComments";
 
 const ThreadPage: FC<TThreadPageProps> = async ({ id }) => {
   const thread = await fetchThread(id);
@@ -13,6 +14,10 @@ const ThreadPage: FC<TThreadPageProps> = async ({ id }) => {
         <ThreadCard thread={thread} />
         <div>
           <PostComment parentId={id} />
+        </div>
+
+        <div>
+          <ThreadComments childThreads={thread.children} />
         </div>
       </div>
     </div>

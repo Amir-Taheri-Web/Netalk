@@ -4,6 +4,7 @@ import Thread from "@/models/Thread.model";
 import User from "@/models/User.model";
 import { TCreateThreadProps } from "@/types/types";
 import connectDB from "@/utils/connectDB";
+import { revalidatePath } from "next/cache";
 
 const createThread = async ({ userId, text, parentId }: TCreateThreadProps) => {
   try {
@@ -17,14 +18,15 @@ const createThread = async ({ userId, text, parentId }: TCreateThreadProps) => {
       parentId: parentId || null,
     });
 
+    user?.threads.push(newThread);
+    await user?.save();
+
     if (parentId) {
       const parentThread = await Thread.findOne({ _id: parentId });
       parentThread.children.push(newThread);
       await parentThread.save();
+      revalidatePath(`/thread/${userId}`);
     }
-
-    user?.threads.push(newThread);
-    await user?.save();
 
     return { status: "success" };
   } catch (error) {

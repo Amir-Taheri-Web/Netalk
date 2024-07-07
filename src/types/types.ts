@@ -60,6 +60,7 @@ export type TCreateThreadProps = {
 
 export type TThreadCardProps = {
   thread: any;
+  isComment?: boolean;
 };
 
 export type TThreadDetailsProps = {
@@ -76,4 +77,8 @@ export type TThreadButtonsProps = {
 
 export type TPostCommentProps = {
   parentId: string;
+};
+
+export type TThreadCommentsProps = {
+  childThreads: any;
 };

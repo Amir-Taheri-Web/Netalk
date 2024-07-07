@@ -62,11 +62,12 @@ const PostComment: FC<TPostCommentProps> = ({ parentId }) => {
         alt="avatar"
         width={60}
         height={60}
-        className="rounded-full object-cover"
+        className="rounded-full object-cover max-sm:w-[50px] max-sm:h-[50px]"
       />
 
       <Form {...form}>
         <form
+          autoComplete="off"
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-row gap-4 items-center w-full"
         >
@@ -82,7 +83,6 @@ const PostComment: FC<TPostCommentProps> = ({ parentId }) => {
                     className="bg-transparent border-none ring-offset-0 focus-visible:ring-offset-0 focus-visible:ring-0 text-base"
                   />
                 </FormControl>
-                <FormMessage />
               </FormItem>
             )}
           />
