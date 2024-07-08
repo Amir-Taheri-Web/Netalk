@@ -64,6 +64,7 @@ export type TCreateThreadProps = {
 export type TThreadCardProps = {
   thread: any;
   isComment?: boolean;
+  isThreadPage?: boolean;
 };
 
 export type TThreadDetailsProps = {
