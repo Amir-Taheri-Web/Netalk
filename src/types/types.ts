@@ -102,3 +102,8 @@ export type TProfileTabsProps = {
 export type TUserProfileProps = {
   params: { id: string };
 };
+
+export type TUsersProps = {
+  users: any;
+  isLoading: boolean;
+};

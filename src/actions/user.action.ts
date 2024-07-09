@@ -1,6 +1,5 @@
 "use server";
 
-import Thread from "@/models/Thread.model";
 import User from "@/models/User.model";
 import { TUserInfoProps } from "@/types/types";
 import connectDB from "@/utils/connectDB";
@@ -90,4 +89,27 @@ const updateUser = async ({
   }
 };
 
-export { getUser, updateUser, createUser };
+const fetchUsers = async (searchString: string) => {
+  try {
+    connectDB();
+
+    const users = await User.find({
+      $or: [
+        { name: { $regex: searchString, $options: "i" } },
+        { username: { $regex: searchString, $options: "i" } },
+      ],
+    });
+
+    const uniqueUsers = Array.from(new Set(users.map((user) => user._id)))
+      .map((id) => users.find((user) => user._id === id))
+      .slice(0, 10);
+
+    revalidatePath("/search");
+
+    return JSON.stringify(uniqueUsers);
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
+
+export { getUser, updateUser, createUser, fetchUsers };
