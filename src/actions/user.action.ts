@@ -16,6 +16,10 @@ const createUser = async ({
   try {
     connectDB();
 
+    const existingUser = await User.findOne({ userId });
+
+    if (existingUser) return existingUser;
+
     const newUser = await User.create({
       userId,
       imageUrl,
