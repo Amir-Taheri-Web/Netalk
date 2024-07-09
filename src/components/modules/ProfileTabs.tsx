@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import threadsIcon from "@/public/assets/reply-tab.svg";
@@ -53,6 +54,12 @@ const ProfileTabs: FC<TProfileTabsProps> = ({
         </TabsList>
 
         <TabsContent value="threads">
+          {mainThreads.length < 1 && (
+            <p className="text-white font-semibold text-2xl">
+              You currently don't have any threads
+            </p>
+          )}
+
           <ul className="flex flex-col gap-12">
             {mainThreads.map((item: { _id: Key | null | undefined }) => (
               <ThreadCard key={item._id} thread={item} />
@@ -61,6 +68,12 @@ const ProfileTabs: FC<TProfileTabsProps> = ({
         </TabsContent>
 
         <TabsContent value="replies">
+          {replyThreads.length < 1 && (
+            <p className="text-white font-semibold text-2xl">
+              You currently don't have any replies
+            </p>
+          )}
+
           <ul className="flex flex-col gap-12">
             {replyThreads.map((item: { _id: Key | null | undefined }) => (
               <ThreadCard key={item._id} thread={item} isProfilePage={true} />
