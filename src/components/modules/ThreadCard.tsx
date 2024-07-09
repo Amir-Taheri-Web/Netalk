@@ -3,11 +3,13 @@ import { FC } from "react";
 import Image from "next/image";
 import ThreadButtons from "./ThreadButtons";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const ThreadCard: FC<TThreadCardProps> = ({
   thread,
   isComment,
   isThreadPage,
+  isProfilePage,
 }) => {
   return (
     <li
@@ -18,13 +20,16 @@ const ThreadCard: FC<TThreadCardProps> = ({
     >
       <div className="flex gap-4">
         <div className="flex flex-col gap-2 items-center">
-          <Image
-            src={thread.author.imageUrl}
-            alt="author image"
-            width={55}
-            height={55}
-            className="rounded-full object-cover max-sm:w-[40px] max-sm:h-[40px]"
-          />
+          <Link href={`/profile/${thread.author.userId}`} prefetch={false}>
+            {" "}
+            <Image
+              src={thread.author.imageUrl}
+              alt="author image"
+              width={55}
+              height={55}
+              className="rounded-full object-cover max-sm:w-[40px] max-sm:h-[40px]"
+            />
+          </Link>
 
           <div className="w-[2px] bg-dark-4 h-full" />
         </div>
@@ -35,7 +40,22 @@ const ThreadCard: FC<TThreadCardProps> = ({
             "mb-4": thread.children.length > 0,
           })}
         >
-          <h4 className="font-bold">{thread.author.username}</h4>
+          <div className="flex items-center gap-4">
+            <h4 className="font-bold">
+              <Link href={`/profile/${thread.author.userId}`} prefetch={ false}>
+                {thread.author.username}
+              </Link>
+            </h4>
+
+            {thread.parentId && isProfilePage && (
+              <Link
+                href={`/thread/${thread.parentId}`}
+                className="text-sm text-gray-1"
+              >
+                Full Thread
+              </Link>
+            )}
+          </div>
           <p>{thread.text}</p>
 
           <ThreadButtons id={thread._id} />
@@ -43,19 +63,26 @@ const ThreadCard: FC<TThreadCardProps> = ({
       </div>
 
       {thread.children.length > 0 && !isThreadPage && (
-        <div className="flex gap-2 items-center">
+        <Link
+          href={`/thread/${thread._id}`}
+          className="flex gap-2 items-center"
+          prefetch={ false}
+        >
           <div className="flex items-center">
-            {thread.children.slice(0, 3).map((item: any, index: number) => (
-              <Image
-                key={item._id}
-                src={item.author?.imageUrl}
-                alt="reply image"
-                width={30}
-                height={30}
-                className="rounded-full object-cover relative"
-                style={{ left: `-${index * 10}px` }}
-              />
-            ))}
+            {thread.children
+              .reverse()
+              .slice(0, 3)
+              .map((item: any, index: number) => (
+                <Image
+                  key={item._id}
+                  src={item.author?.imageUrl}
+                  alt="reply image"
+                  width={30}
+                  height={30}
+                  className="rounded-full object-cover relative"
+                  style={{ left: `-${index * 10}px` }}
+                />
+              ))}
 
             {thread.children.length > 3 && (
               <span className="rounded-full object-cover relative -left-[30px] w-[30px] h-[30px] bg-dark-4 text-white flex-center text-sm">
@@ -65,11 +92,16 @@ const ThreadCard: FC<TThreadCardProps> = ({
           </div>
           <span
             className="text-gray-1 text-sm relative"
-            style={{ left: `-${(thread.children.length < 4 ? thread.children.length - 1 : 3) * 10}px` }}
+            style={{
+              left: `-${
+                (thread.children.length < 4 ? thread.children.length - 1 : 3) *
+                10
+              }px`,
+            }}
           >
             {thread.children.length} replies
           </span>
-        </div>
+        </Link>
       )}
     </li>
   );

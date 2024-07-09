@@ -83,7 +83,7 @@ const fetchThread = async (id: string) => {
         populate: {
           path: "author",
           model: User,
-          select: "_id username imageUrl",
+          select: "_id userId username imageUrl",
         },
       });
 

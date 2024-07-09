@@ -41,13 +41,15 @@ const ProfileTabs: FC<TProfileTabsProps> = ({
             />
             <span className="max-md:hidden">Replies</span>
           </TabsTrigger>
-          <TabsTrigger
-            value="edit"
-            className="flex items-center gap-2 bg-dark-2 border-dark-2 text-white flex-1 data-[state=active]:bg-dark-3 data-[state=active]:text-white"
-          >
-            <Image src={editIcon} alt="edit icon" width={20} height={20} />
-            <span className="max-md:hidden">Edit</span>
-          </TabsTrigger>
+          {userInfo && (
+            <TabsTrigger
+              value="edit"
+              className="flex items-center gap-2 bg-dark-2 border-dark-2 text-white flex-1 data-[state=active]:bg-dark-3 data-[state=active]:text-white"
+            >
+              <Image src={editIcon} alt="edit icon" width={20} height={20} />
+              <span className="max-md:hidden">Edit</span>
+            </TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="threads">
@@ -61,14 +63,16 @@ const ProfileTabs: FC<TProfileTabsProps> = ({
         <TabsContent value="replies">
           <ul className="flex flex-col gap-12">
             {replyThreads.map((item: { _id: Key | null | undefined }) => (
-              <ThreadCard key={item._id} thread={item} />
+              <ThreadCard key={item._id} thread={item} isProfilePage={true} />
             ))}
           </ul>
         </TabsContent>
 
-        <TabsContent value="edit">
-          <OnboardingPage userInfo={userInfo} isEdit={true} />
-        </TabsContent>
+        {userInfo && (
+          <TabsContent value="edit">
+            <OnboardingPage userInfo={userInfo} isEdit={true} />
+          </TabsContent>
+        )}
       </Tabs>
     </>
   );

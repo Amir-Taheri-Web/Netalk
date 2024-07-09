@@ -3,7 +3,7 @@ import Image from "next/image";
 import { FC } from "react";
 import ProfileTabs from "../modules/ProfileTabs";
 
-const ProfilePage: FC<TProfileProps> = ({ user }) => {
+const ProfilePage: FC<TProfileProps> = ({ user, isPrivate }) => {
   const mainThreads = user.threads.filter(
     (item: { parentId: any }) => !!!item.parentId
   );
@@ -47,9 +47,9 @@ const ProfilePage: FC<TProfileProps> = ({ user }) => {
 
         <div className="w-full">
           <ProfileTabs
-            mainThreads={mainThreads}
-            replyThreads={replyThreads}
-            userInfo={userInfo}
+            mainThreads={mainThreads.reverse()}
+            replyThreads={replyThreads.reverse()}
+            userInfo={!isPrivate ? null : userInfo}
           />
         </div>
       </div>

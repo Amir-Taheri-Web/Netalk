@@ -65,6 +65,7 @@ export type TThreadCardProps = {
   thread: any;
   isComment?: boolean;
   isThreadPage?: boolean;
+  isProfilePage?: boolean;
 };
 
 export type TThreadDetailsProps = {
@@ -89,10 +90,15 @@ export type TThreadCommentsProps = {
 
 export type TProfileProps = {
   user: any;
+  isPrivate?: boolean;
 };
 
 export type TProfileTabsProps = {
   mainThreads: any;
   replyThreads: any;
   userInfo: any;
+};
+
+export type TUserProfileProps = {
+  params: { id: string };
 };

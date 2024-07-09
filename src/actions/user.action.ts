@@ -1,5 +1,6 @@
 "use server";
 
+import Thread from "@/models/Thread.model";
 import User from "@/models/User.model";
 import { TUserInfoProps } from "@/types/types";
 import connectDB from "@/utils/connectDB";
@@ -33,14 +34,26 @@ const getUser = async (userId: string) => {
   try {
     connectDB();
 
-    const user = await User.findOne({ userId }).populate({
-      path: "threads",
-      populate: {
-        path: "author",
-        model: User,
-        select: "_id username imageUrl",
-      },
-    });
+    const user = await User.findOne({ userId })
+      .populate({
+        path: "threads",
+        populate: {
+          path: "author",
+          model: User,
+          select: "_id userId username imageUrl",
+        },
+      })
+      .populate({
+        path: "threads",
+        populate: {
+          path: "children",
+          populate: {
+            path: "author",
+            model: User,
+            select: "_id userId username imageUrl",
+          },
+        },
+      });
 
     return user;
   } catch (error) {
