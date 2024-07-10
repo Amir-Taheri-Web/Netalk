@@ -112,4 +112,17 @@ const fetchUsers = async (searchString: string) => {
   }
 };
 
-export { getUser, updateUser, createUser, fetchUsers };
+const fetchSuggestedUsers = async () => {
+  try {
+    connectDB();
+
+    const users = await User.find();
+    const finalUsers = users.reverse().slice(0, 4);
+
+    return finalUsers;
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
+
+export { getUser, updateUser, createUser, fetchUsers, fetchSuggestedUsers };
