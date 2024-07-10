@@ -107,3 +107,7 @@ export type TUsersProps = {
   users: any;
   isLoading: boolean;
 };
+
+export type TActivityProps = {
+  user: any;
+};
