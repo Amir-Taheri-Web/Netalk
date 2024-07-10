@@ -1,6 +1,7 @@
 import { createUser, getUser } from "@/actions/user.action";
 import OnboardingPage from "@/components/templates/OnboardingPage";
 import { currentUser } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 const Onboarding = async () => {
   const user = await currentUser();
@@ -15,6 +16,8 @@ const Onboarding = async () => {
       bio: "",
     });
   }
+
+  if (userData?.onboarding) redirect("/profile");
 
   const userInfo = {
     userId: userData?.userId || "",
