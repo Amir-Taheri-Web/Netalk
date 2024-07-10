@@ -42,7 +42,7 @@ const ThreadCard: FC<TThreadCardProps> = ({
         >
           <div className="flex items-center gap-4">
             <h4 className="font-bold">
-              <Link href={`/profile/${thread.author.userId}`} prefetch={ false}>
+              <Link href={`/profile/${thread.author.userId}`} prefetch={false}>
                 {thread.author.username}
               </Link>
             </h4>
@@ -66,23 +66,26 @@ const ThreadCard: FC<TThreadCardProps> = ({
         <Link
           href={`/thread/${thread._id}`}
           className="flex gap-2 items-center"
-          prefetch={ false}
+          prefetch={false}
         >
           <div className="flex items-center">
             {thread.children
               .reverse()
               .slice(0, 3)
-              .map((item: any, index: number) => (
-                <Image
-                  key={item._id}
-                  src={item.author?.imageUrl}
-                  alt="reply image"
-                  width={30}
-                  height={30}
-                  className="rounded-full object-cover relative"
-                  style={{ left: `-${index * 10}px` }}
-                />
-              ))}
+              .map((item: any, index: number) => {
+                if (!isComment)
+                  return (
+                    <Image
+                      key={item._id}
+                      src={item.author?.imageUrl}
+                      alt="reply image"
+                      width={30}
+                      height={30}
+                      className="rounded-full object-cover relative"
+                      style={{ left: `-${index * 10}px` }}
+                    />
+                  );
+              })}
 
             {thread.children.length > 3 && (
               <span className="rounded-full object-cover relative -left-[30px] w-[30px] h-[30px] bg-dark-4 text-white flex-center text-sm">
@@ -103,6 +106,8 @@ const ThreadCard: FC<TThreadCardProps> = ({
           </span>
         </Link>
       )}
+
+      {isComment && thread.children.length > 0 && <div className="mb-4" />}
     </li>
   );
 };
