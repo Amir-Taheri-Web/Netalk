@@ -39,6 +39,11 @@
   height: 2rem;
 }
 
+.cl-organizationPreviewAvatarBox {
+  width: 2rem;
+  height: 2rem;
+}
+
 input[type="file"]::file-selector-button {
   color: #ffffff;
 }

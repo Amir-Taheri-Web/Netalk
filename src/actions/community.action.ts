@@ -1,7 +1,10 @@
+import Community from "@/models/Community.model";
+import User from "@/models/User.model";
 import {
   TCreateCommunityProps,
   TUpdateCommunityInfoProps,
 } from "@/types/types";
+import connectDB from "@/utils/connectDB";
 
 const createCommunity = async ({
   id,
@@ -10,7 +13,37 @@ const createCommunity = async ({
   image,
   bio,
   createdBy,
-}: TCreateCommunityProps) => {};
+}: TCreateCommunityProps) => {
+  try {
+    connectDB();
+
+    const owner = await User.findOne({ userId: createdBy });
+
+    console.log(owner);
+
+    if (!owner) return;
+
+    const newCommunity = await Community.create({
+      communityId: id,
+      name,
+      slug,
+      image,
+      bio,
+      owner,
+    });
+    newCommunity.members.push();
+    newCommunity.save();
+
+    owner.communities.push(newCommunity);
+    owner.save();
+
+    console.log(newCommunity);
+
+    return newCommunity;
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
 
 const addMemberToCommunity = async (orgId: string, userId: string) => {};
 
