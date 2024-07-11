@@ -81,13 +81,13 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
       { communityId: orgId },
       {
         $pull: {
-          members: [{ userId }],
+          members: [{ userId: userId }],
         },
       }
     );
 
     await User.updateOne(
-      { userId },
+      { userId: userId },
       {
         $pull: {
           communities: [{ communityId: orgId }],

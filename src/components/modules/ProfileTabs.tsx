@@ -8,8 +8,9 @@ import { TProfileTabsProps } from "@/types/types";
 import { FC, Key } from "react";
 import ThreadCard from "./ThreadCard";
 import OnboardingPage from "../templates/OnboardingPage";
+import { currentUser } from "@clerk/nextjs/server";
 
-const ProfileTabs: FC<TProfileTabsProps> = ({
+const ProfileTabs: FC<TProfileTabsProps> = async ({
   mainThreads,
   replyThreads,
   userInfo,
