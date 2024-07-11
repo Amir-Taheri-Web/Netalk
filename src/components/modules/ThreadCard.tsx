@@ -27,7 +27,7 @@ const ThreadCard: FC<TThreadCardProps> = ({
               alt="author image"
               width={55}
               height={55}
-              className="rounded-full object-cover max-sm:w-[40px] max-sm:h-[40px]"
+              className="rounded-full w-[55px] h-[55px] object-cover max-sm:w-[40px] max-sm:h-[40px]"
             />
           </Link>
 
@@ -81,7 +81,7 @@ const ThreadCard: FC<TThreadCardProps> = ({
                       alt="reply image"
                       width={30}
                       height={30}
-                      className="rounded-full object-cover relative"
+                      className="rounded-full object-cover w-[30px] h-[30px] relative"
                       style={{ left: `-${index * 10}px` }}
                     />
                   );

@@ -25,7 +25,7 @@ const RightNav = async () => {
                 alt="user image"
                 width={50}
                 height={50}
-                className="rounded-full object-cover"
+                className="rounded-full w-[50px] h-[50px] object-cover"
               />
 
               <div>

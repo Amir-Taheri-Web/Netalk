@@ -11,7 +11,7 @@ const MainLayout: FC<TProps> = ({ children }) => {
       <TopNav />
       <div className="mt-[80px] relative flex justify-between w-full">
         <LeftNav />
-        <main className="p-12 max-lg:p-8 max-sm:p-4 mx-auto flex-1">{children}</main>
+        <main className="p-12 max-lg:p-8 max-sm:p-4 max-sm:mb-20 mx-auto flex-1">{children}</main>
         <RightNav />
       </div>
       <BottomNav />

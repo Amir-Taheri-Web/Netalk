@@ -19,7 +19,7 @@ const Users: FC<TUsersProps> = ({ users, isLoading }) => {
             alt="user image"
             width={60}
             height={60}
-            className="rounded-full object-cover"
+            className="rounded-full w-[60px] h-[60px] object-cover"
           />
 
           <div>

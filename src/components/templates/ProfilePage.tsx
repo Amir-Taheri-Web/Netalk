@@ -30,7 +30,7 @@ const ProfilePage: FC<TProfileProps> = ({ user, isPrivate }) => {
                 alt="profile avatar"
                 width={80}
                 height={80}
-                className="rounded-full object-cover"
+                className="rounded-full w-[80px] h-[80px] object-cover"
               />
             </div>
 

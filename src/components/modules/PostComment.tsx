@@ -60,9 +60,9 @@ const PostComment: FC<TPostCommentProps> = ({ parentId }) => {
       <Image
         src={user?.imageUrl as string}
         alt="avatar"
-        width={60}
-        height={60}
-        className="rounded-full object-cover max-sm:w-[50px] max-sm:h-[50px]"
+        width={100}
+        height={100}
+        className="rounded-full w-[60px] h-[60px] object-cover max-sm:w-[50px] max-sm:h-[50px]"
       />
 
       <Form {...form}>

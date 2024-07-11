@@ -28,7 +28,7 @@ const ActivityPage: FC<TActivityProps> = ({ user }) => {
                 alt="user image"
                 width={40}
                 height={40}
-                className="rounded-full object-cover"
+                className="rounded-full w-[40px] h-[40px] object-cover"
               />
 
               <span className="text-main-1 font-semibold">{item.author.username || item.author.name}</span>
