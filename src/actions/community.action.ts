@@ -21,7 +21,7 @@ const createCommunity = async ({
 
     if (!owner) return;
 
-    const community = await Community.find({ communityId: id });
+    const community = await Community.findOne({ communityId: id });
 
     if (community) return;
 
