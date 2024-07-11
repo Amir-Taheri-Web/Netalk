@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 
 const createThread = async ({ userId, text, parentId }: TCreateThreadProps) => {
   try {
-    connectDB();
+    await connectDB();
 
     const user = await User.findOne({ userId });
 
@@ -36,7 +36,7 @@ const createThread = async ({ userId, text, parentId }: TCreateThreadProps) => {
 
 const fetchThreads = async (amount: number, skipAmount: number) => {
   try {
-    connectDB();
+    await connectDB();
 
     const threads = await Thread.find({ parentId: { $in: [null, undefined] } })
       .sort({ createdAt: "desc" })
@@ -70,7 +70,7 @@ const fetchThreads = async (amount: number, skipAmount: number) => {
 
 const fetchThread = async (id: string) => {
   try {
-    connectDB();
+    await connectDB();
 
     const thread = await Thread.findOne({ _id: id })
       .populate({

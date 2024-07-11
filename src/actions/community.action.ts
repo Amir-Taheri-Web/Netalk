@@ -16,7 +16,7 @@ const createCommunity = async ({
   createdBy,
 }: TCreateCommunityProps) => {
   try {
-    connectDB();
+    await connectDB();
 
     const owner = await User.findOne({ userId: createdBy });
 
@@ -49,7 +49,7 @@ const createCommunity = async ({
 
 const addMemberToCommunity = async (orgId: string, userId: string) => {
   try {
-    connectDB();
+    await connectDB();
 
     const user = await User.findOne({ userId });
 
@@ -75,12 +75,12 @@ const addMemberToCommunity = async (orgId: string, userId: string) => {
 
 const removeUserFromCommunity = async (orgId: string, userId: string) => {
   try {
-    connectDB();
+    await connectDB();
 
     await Community.updateOne(
       { communityId: orgId },
       {
-        $pullAll: {
+        $pull: {
           members: [{ userId }],
         },
       }
@@ -89,7 +89,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
     await User.updateOne(
       { userId },
       {
-        $pullAll: {
+        $pull: {
           communities: [{ communityId: orgId }],
         },
       }

@@ -36,7 +36,7 @@ const createUser = async ({
 
 const getUser = async (userId: string) => {
   try {
-    connectDB();
+    await connectDB();
 
     const user = await User.findOne({ userId })
       .populate({
@@ -75,7 +75,7 @@ const updateUser = async ({
   isEdit,
 }: TUserInfoProps) => {
   try {
-    connectDB();
+    await connectDB();
 
     const user = await User.findOneAndUpdate(
       { userId },
@@ -93,7 +93,7 @@ const updateUser = async ({
 
 const fetchUsers = async (searchString: string) => {
   try {
-    connectDB();
+    await connectDB();
 
     const users = await User.find({
       $or: [
@@ -116,7 +116,7 @@ const fetchUsers = async (searchString: string) => {
 
 const fetchSuggestedUsers = async () => {
   try {
-    connectDB();
+    await connectDB();
 
     const users = await User.find();
     const finalUsers = users.reverse().slice(0, 4);
