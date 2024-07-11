@@ -136,6 +136,7 @@ export interface ICommunity {
   bio: string;
   owner: Types.ObjectId;
   members: Types.ObjectId[];
+  threads: Types.ObjectId[];
 }
 
 export type TCommunityModel = Model<ICommunity>;

@@ -38,6 +38,13 @@ const communitySchema = new Schema<ICommunity, TCommunityModel>({
       ref: "User",
     },
   ],
+
+  threads: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Thread",
+    },
+  ],
 });
 
 const Community =

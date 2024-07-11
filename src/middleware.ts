@@ -4,7 +4,7 @@ const protectedRoutes = createRouteMatcher([
   "/",
   "/onboarding",
   "/create-thread",
-  "/thread(.*)",
+  "/thread/(.*)",
   "/profile",
 ]);
 
