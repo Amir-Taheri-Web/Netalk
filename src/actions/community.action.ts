@@ -81,7 +81,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
       { communityId: orgId },
       {
         $pull: {
-          members: [{ userId }],
+          members: { userId },
         },
       }
     );
@@ -90,7 +90,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
       { userId },
       {
         $pull: {
-          communities: [{ communityId: orgId }],
+          communities: { communityId: orgId },
         },
       }
     );
