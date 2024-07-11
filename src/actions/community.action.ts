@@ -122,7 +122,19 @@ const updateCommunityInfo = async ({
 
 const deleteCommunity = async (
   id: string | number | Record<string, string>[]
-) => {};
+) => {
+  try {
+    await connectDB();
+
+    await Community.deleteOne({ communityId: id });
+
+    await User.find({}, { $pull: { communities: { communityId: id } } });
+
+    return { message: "Community updated" };
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
 
 export {
   addMemberToCommunity,
