@@ -19,8 +19,6 @@ const createCommunity = async ({
 
     const owner = await User.findOne({ userId: createdBy });
 
-    console.log(owner);
-
     if (!owner) return;
 
     const community = await Community.find({ communityId: id });
@@ -34,14 +32,12 @@ const createCommunity = async ({
       image,
       bio,
       owner,
+      $push: { members: owner },
     });
-    newCommunity.members.push(owner);
-    newCommunity.save();
+    await newCommunity.save();
 
     owner.communities.push(newCommunity);
-    owner.save();
-
-    console.log(newCommunity);
+    await owner.save();
 
     return newCommunity;
   } catch (error) {
