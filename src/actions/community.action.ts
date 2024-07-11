@@ -32,8 +32,10 @@ const createCommunity = async ({
       image,
       bio,
       owner,
-      $push: { members: owner },
     });
+
+    newCommunity.members.push(owner);
+    await newCommunity.save();
 
     owner.communities.push(newCommunity);
     await owner.save();
