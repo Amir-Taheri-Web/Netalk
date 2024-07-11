@@ -81,7 +81,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
       { communityId: orgId },
       {
         $pull: {
-          members: [{ userId: userId }],
+          "members": { userId: userId },
         },
       }
     );
@@ -90,7 +90,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
       { userId: userId },
       {
         $pull: {
-          communities: [{ communityId: orgId }],
+          "communities": { communityId: orgId },
         },
       }
     );
@@ -128,7 +128,7 @@ const deleteCommunity = async (
 
     await Community.deleteOne({ communityId: id });
 
-    await User.find({}, { $pull: { communities: [{ communityId: id }] } });
+    await User.find({}, { $pull: { "communities": { communityId: id } } });
 
     return { message: "Community updated" };
   } catch (error) {
