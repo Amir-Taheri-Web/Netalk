@@ -46,7 +46,26 @@ const createCommunity = async ({
   }
 };
 
-const addMemberToCommunity = async (orgId: string, userId: string) => {};
+const addMemberToCommunity = async (orgId: string, userId: string) => {
+  try {
+    connectDB();
+
+    const user = await User.findOne({ userId });
+
+    if (!user) return;
+
+    const community = await Community.findOne({ communityId: orgId });
+
+    if (!community) return;
+
+    community.members.push(user);
+    await community.save();
+
+    return { message: "Member added to community" };
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
 
 const removeUserFromCommunity = async (orgId: string, userId: string) => {};
 
