@@ -14,11 +14,11 @@ const RightNav = async () => {
       <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-bold">Suggested users</h2>
 
-        <ul className="flex flex-col gap-8 max-sm:gap-8">
+        <ul className="flex flex-col gap-4 max-sm:gap-8">
           {users?.map((item: any) => (
             <li
               key={item._id}
-              className="bg-dark-4 p-4 rounded-lg flex gap-2 items-center"
+              className="py-4 rounded-lg flex gap-2 items-center"
             >
               <Image
                 src={item.imageUrl}

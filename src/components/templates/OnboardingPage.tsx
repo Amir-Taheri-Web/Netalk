@@ -109,19 +109,20 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo, isEdit }) => {
       className={cn("w-full flex-center p-8", {
         "pt-0": isEdit,
         "min-h-screen": !isEdit,
+        "px-0": isEdit,
       })}
     >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 bg-dark-2 max-w-[1000px] p-8 rounded-lg w-full flex flex-col gap-8"
+          className="space-y-8 bg-dark-2 max-w-[1000px] p-8 max-sm:p-4 rounded-lg w-full flex flex-col gap-8"
         >
           <FormField
             control={form.control}
             name="imageUrl"
             render={({ field }) => (
-              <FormItem className="relative flex gap-4 items-center flex-wrap">
-                <FormLabel className="w-[140px] h-[140px] relative">
+              <FormItem className="relative flex gap-4 items-center flex-wrap max-sm:justify-center max-sm:gap-0">
+                <FormLabel className="w-[140px] h-[140px] max-sm:w-[100px] max-sm:h-[100px] relative">
                   {field.value ? (
                     <Image
                       src={field.value}
@@ -142,7 +143,7 @@ const OnboardingPage: FC<TOnboardingProps> = ({ userInfo, isEdit }) => {
                     accept="image/*"
                     placeholder="Choose your avatar"
                     onChange={(e) => imageHandler(e, field.onChange)}
-                    className="bg-transparent border-none outline-none text-main-1 cursor-pointer w-fit"
+                    className="bg-transparent border-none outline-none text-main-1 cursor-pointer w-[215px]"
                   />
                 </FormControl>
                 <FormMessage />

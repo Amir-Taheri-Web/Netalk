@@ -18,7 +18,7 @@
   }
 
   .input {
-    @apply bg-dark-4 border-none outline-none ring-0 text-white text-base placeholder:!text-white placeholder:opacity-60;
+    @apply bg-dark-4 w-full border-none outline-none ring-0 text-white text-base placeholder:!text-white placeholder:opacity-60;
   }
 
   .main-title {
