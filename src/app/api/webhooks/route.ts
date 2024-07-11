@@ -133,7 +133,7 @@ export const POST = async (request: Request) => {
 
       return NextResponse.json(
         { message: "Membership deleted" },
-        { status: 201 }
+        { status: 200 }
       );
     } catch (err) {
       console.log(err);
@@ -152,7 +152,7 @@ export const POST = async (request: Request) => {
 
       return NextResponse.json(
         { message: "Organization updated" },
-        { status: 201 }
+        { status: 200 }
       );
     } catch (err) {
       console.log(err);
@@ -171,7 +171,7 @@ export const POST = async (request: Request) => {
 
       return NextResponse.json(
         { message: "Organization deleted" },
-        { status: 201 }
+        { status: 200 }
       );
     } catch (err) {
       console.log(err);
