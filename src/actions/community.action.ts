@@ -35,7 +35,7 @@ const createCommunity = async ({
       bio,
       owner,
     });
-    newCommunity.members.push();
+    newCommunity.members.push(owner);
     newCommunity.save();
 
     owner.communities.push(newCommunity);
