@@ -108,7 +108,17 @@ const updateCommunityInfo = async ({
   name,
   slug,
   image,
-}: TUpdateCommunityInfoProps) => {};
+}: TUpdateCommunityInfoProps) => {
+  try {
+    await connectDB();
+
+    await Community.updateOne({ communityId: id }, { name, slug, image });
+
+    return { message: "Community updated" };
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
 
 const deleteCommunity = async (
   id: string | number | Record<string, string>[]
