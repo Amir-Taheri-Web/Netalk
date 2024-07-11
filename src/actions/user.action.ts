@@ -1,5 +1,6 @@
 "use server";
 
+import Community from "@/models/Community.model";
 import User from "@/models/User.model";
 import { TUserInfoProps } from "@/types/types";
 import connectDB from "@/utils/connectDB";
@@ -56,7 +57,8 @@ const getUser = async (userId: string) => {
             select: "_id userId username imageUrl",
           },
         },
-      });
+      })
+      .populate({ path: "communities", model: Community });
 
     return user;
   } catch (error) {

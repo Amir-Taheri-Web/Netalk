@@ -5,6 +5,7 @@ import {
   TUpdateCommunityInfoProps,
 } from "@/types/types";
 import connectDB from "@/utils/connectDB";
+import { revalidatePath } from "next/cache";
 
 const createCommunity = async ({
   id,
@@ -61,13 +62,46 @@ const addMemberToCommunity = async (orgId: string, userId: string) => {
     community.members.push(user);
     await community.save();
 
+    user.communities.push(community);
+    await user.save();
+
+    revalidatePath("/community");
+
     return { message: "Member added to community" };
   } catch (error) {
     console.log("Connection to server failed", error);
   }
 };
 
-const removeUserFromCommunity = async (orgId: string, userId: string) => {};
+const removeUserFromCommunity = async (orgId: string, userId: string) => {
+  try {
+    connectDB();
+
+    const user = await User.findOne({ userId });
+
+    if (!user) return;
+
+    const community = await Community.findOne({ communityId: orgId });
+
+    if (!community) return;
+
+    community.members = community.members.filter(
+      (item: any) => item.userId !== userId
+    );
+    await community.save();
+
+    user.communities = user.communities.filter(
+      (item: any) => item.communityId !== orgId
+    );
+    await user.save();
+
+    revalidatePath("/community");
+
+    return { message: "Member removed from community" };
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
 
 const updateCommunityInfo = async ({
   id,
