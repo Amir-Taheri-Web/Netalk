@@ -34,7 +34,6 @@ const createCommunity = async ({
       owner,
       $push: { members: owner },
     });
-    await newCommunity.save();
 
     owner.communities.push(newCommunity);
     await owner.save();
