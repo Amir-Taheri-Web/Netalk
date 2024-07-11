@@ -111,3 +111,31 @@ export type TUsersProps = {
 export type TActivityProps = {
   user: any;
 };
+
+export type TCreateCommunityProps = {
+  id: string | number | Record<string, string>[];
+  name: string | number | Record<string, string>[];
+  slug: string | number | Record<string, string>[];
+  image: string | number | Record<string, string>[];
+  bio: string | number | Record<string, string>[];
+  createdBy: string | number | Record<string, string>[];
+};
+
+export type TUpdateCommunityInfoProps = {
+  id: string | number | Record<string, string>[];
+  name: string | number | Record<string, string>[];
+  slug: string | number | Record<string, string>[];
+  image: string | number | Record<string, string>[];
+};
+
+export interface ICommunity {
+  communityId: string;
+  name: string;
+  slug: string;
+  image: string;
+  bio: string;
+  owner: Types.ObjectId;
+  members: Types.ObjectId[];
+}
+
+export type TCommunityModel = Model<ICommunity>;
