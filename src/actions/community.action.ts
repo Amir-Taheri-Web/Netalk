@@ -77,7 +77,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
   try {
     connectDB();
 
-    await Community.findOneAndUpdate(
+    const community = await Community.findOneAndUpdate(
       { communityId: orgId },
       {
         $pullAll: {
@@ -86,7 +86,9 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
       }
     );
 
-    await User.findOneAndUpdate(
+    await community?.save();
+
+    const user = await User.findOneAndUpdate(
       { userId },
       {
         $pullAll: {
@@ -94,6 +96,8 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
         },
       }
     );
+
+    await user?.save();
 
     // community.members = community.members.filter(
     //   (item: any) => item.userId !== userId
