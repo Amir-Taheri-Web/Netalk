@@ -144,7 +144,7 @@ export const POST = async (request: Request) => {
     }
   }
 
-  // Listen organization updation event
+  // Listen organization updating event
   if (eventType === "organization.updated") {
     const { id, logo_url, name, slug } = evnt.data;
     try {

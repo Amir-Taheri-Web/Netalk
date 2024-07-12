@@ -77,7 +77,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
   try {
     await connectDB();
 
-    await Community.findOneAndUpdate(
+    await Community.updateMany(
       { communityId: orgId },
       {
         $pull: {
@@ -86,7 +86,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
       }
     );
 
-    await User.findOneAndUpdate(
+    await User.updateMany(
       { userId: userId },
       {
         $pull: {
@@ -128,7 +128,9 @@ const deleteCommunity = async (
 
     await Community.deleteOne({ communityId: id });
 
-    // await User.find({}, { $pull: { "communities": { communityId: id } } });
+    await User.updateMany(undefined, {
+      $pull: { communities: { communityId: id } },
+    });
 
     return { message: "Community updated" };
   } catch (error) {
