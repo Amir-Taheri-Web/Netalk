@@ -28,6 +28,8 @@ const createThread = async ({ userId, text, parentId }: TCreateThreadProps) => {
       revalidatePath(`/thread/${userId}`);
     }
 
+    revalidatePath("/");
+
     return { status: "success" };
   } catch (error) {
     console.log("Connection to server failed", error);
