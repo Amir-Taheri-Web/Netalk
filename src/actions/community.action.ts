@@ -77,23 +77,19 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
   try {
     await connectDB();
 
-    await Community.updateMany(
-      { communityId: orgId },
-      {
-        $pull: {
-          members: { userId: userId },
-        },
-      }
-    );
+    const community = await Community.findOne({ communityId: orgId });
 
-    await User.updateMany(
-      { userId: userId },
-      {
-        $pull: {
-          communities: { communityId: orgId },
-        },
-      }
-    );
+    if (!community) return;
+
+    community.members = community.members.filter((item: { userId: string; }) => item.userId !== userId);
+    await community.save();
+
+    const user = await User.findOne({ userId: userId });
+
+    if (!user) return;
+
+    user.communities = user.communities.filter((item) => item.communityId !== orgId)
+    await user.save();
 
     revalidatePath("/community");
 
