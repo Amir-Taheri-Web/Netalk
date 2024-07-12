@@ -134,7 +134,7 @@ const deleteCommunity = async (
 
     await Community.deleteOne({ communityId: id });
 
-    await User.updateMany(undefined, {
+    await User.updateOne(undefined, {
       $pull: { communities: { communityId: id } },
     });
 
