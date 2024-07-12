@@ -145,3 +145,7 @@ export type TCommunitiesListProps = {
   communities: any;
   isLoading: boolean;
 };
+
+export type TCommunityDetailsProps = {
+  params: { id: string };
+};

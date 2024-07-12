@@ -8,6 +8,8 @@ const protectedRoutes = createRouteMatcher([
   "/profile",
   "/activity",
   "/search",
+  "/communities",
+  "/communities/(.*)",
 ]);
 
 export default clerkMiddleware((auth, req) => {

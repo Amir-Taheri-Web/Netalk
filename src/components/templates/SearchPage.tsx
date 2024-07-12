@@ -41,7 +41,7 @@ const SearchPage = () => {
     <div className="max-w-[1000px] mx-auto flex flex-col gap-8">
       <h2 className="main-title">Search Users</h2>
 
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-12 max-sm:gap-8">
         <form
           onSubmit={searchHandler}
           autoComplete="off"

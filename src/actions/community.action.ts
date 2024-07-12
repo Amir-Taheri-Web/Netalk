@@ -154,17 +154,31 @@ const fetchCommunities = async (searchString: string) => {
         { name: { $regex: searchString.trim(), $options: "i" } },
         { slug: { $regex: searchString.trim(), $options: "i" } },
       ],
-    });
+    })
+      .populate({path: "members", model: "User", select: "imageUrl"});
 
     const uniqueCommunities = Array.from(
       new Set(communities.map((community) => community._id))
     )
       .map((id) => communities.find((community) => community._id === id))
-      .slice(0, 9);
+      .slice(0, 8);
 
     revalidatePath("/communities");
 
     return JSON.stringify(uniqueCommunities);
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
+
+const fetchSuggestedCommunities = async () => {
+  try {
+    await connectDB();
+
+    const communities = await Community.find();
+    const finalCommunities = communities.reverse().slice(0, 4);
+
+    return finalCommunities;
   } catch (error) {
     console.log("Connection to server failed", error);
   }
@@ -177,4 +191,5 @@ export {
   removeUserFromCommunity,
   updateCommunityInfo,
   fetchCommunities,
+  fetchSuggestedCommunities,
 };
