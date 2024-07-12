@@ -3,10 +3,7 @@ import ThreadCard from "../modules/ThreadCard";
 import LoadMoreThreads from "../modules/LoadMoreThreads";
 import { Key } from "react";
 
-const HomePage = async () => {
-  const threads = await fetchThreads(10, 0);
-  const result = JSON.parse(threads as string);
-
+const HomePage = async ({ result }: any) => {
   return (
     <div className="max-w-[1000px] mx-auto flex flex-col gap-8">
       <h2 className="main-title">Home</h2>

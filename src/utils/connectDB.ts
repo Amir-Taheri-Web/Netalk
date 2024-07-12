@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
-import { revalidatePath } from "next/cache";
 
 const connectDB = async (): Promise<void> => {
   mongoose.set("strictQuery", true);
-  revalidatePath("/", "layout");
 
   try {
     if (mongoose.connections[0].readyState) return;
