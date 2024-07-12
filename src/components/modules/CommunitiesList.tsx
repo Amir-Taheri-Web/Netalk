@@ -20,8 +20,8 @@ const CommunitiesList: FC<TCommunitiesListProps> = ({
           <Image
             src={item.image}
             alt="community image"
-            width={60}
-            height={60}
+            width={200}
+            height={200}
             className="rounded-full w-[60px] h-[60px] object-cover"
           />
 

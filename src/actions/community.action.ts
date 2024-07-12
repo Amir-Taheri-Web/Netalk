@@ -43,6 +43,8 @@ const createCommunity = async ({
     owner.communities.push(newCommunity);
     await owner.save();
 
+    revalidatePath("/communities");
+
     return newCommunity;
   } catch (error) {
     console.log("Connection to server failed", error);
@@ -67,7 +69,7 @@ const addMemberToCommunity = async (orgId: string, userId: string) => {
     user.communities.push(community);
     await user.save();
 
-    revalidatePath("/community");
+    revalidatePath("/communities");
 
     return { message: "Member added to community" };
   } catch (error) {
@@ -97,7 +99,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
       }
     );
 
-    revalidatePath("/community");
+    revalidatePath("/communities");
 
     return { message: "Member removed from community" };
   } catch (error) {
@@ -115,6 +117,8 @@ const updateCommunityInfo = async ({
     await connectDB();
 
     await Community.updateOne({ communityId: id }, { name, slug, image });
+
+    revalidatePath("/communities");
 
     return { message: "Community updated" };
   } catch (error) {
@@ -134,6 +138,7 @@ const deleteCommunity = async (
       $pull: { communities: { communityId: id } },
     });
 
+    revalidatePath("/communities");
     return { message: "Community updated" };
   } catch (error) {
     console.log("Connection to server failed", error);
