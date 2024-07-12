@@ -22,7 +22,7 @@ const ActivityPage: FC<TActivityProps> = ({ user }) => {
       <ul className="flex flex-col gap-8">
         {children?.map((item: any) => (
           <li key={item._id}>
-            <Link href={`/thread/${item.parentId}`} className="bg-dark-4 py-2 px-4 flex gap-4 items-center rounded-lg max-sm:flex-col max-sm:gap-2">
+            <Link href={`/thread/${item.parentId}`} className="bg-dark-3 py-2 px-4 flex gap-4 items-center rounded-lg max-sm:flex-col max-sm:gap-2">
               <Image
                 src={item.author.imageUrl}
                 alt="user image"

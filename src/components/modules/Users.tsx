@@ -12,7 +12,7 @@ const Users: FC<TUsersProps> = ({ users, isLoading }) => {
       {users.map((item: any) => (
         <li
           key={item._id}
-          className="bg-dark-4 p-4 rounded-lg flex gap-4 items-center"
+          className="bg-dark-3 p-4 rounded-lg flex gap-4 items-center"
         >
           <Image
             src={item.imageUrl}

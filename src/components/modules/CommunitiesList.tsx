@@ -15,7 +15,7 @@ const CommunitiesList: FC<TCommunitiesListProps> = ({
       {communities.map((item: any) => (
         <li
           key={item._id}
-          className="bg-dark-4 p-4 rounded-lg flex flex-col gap-8 items-start"
+          className="bg-dark-3 p-4 rounded-lg flex flex-col gap-8 items-start"
         >
           <div className="flex gap-4">
             <Image
