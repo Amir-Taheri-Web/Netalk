@@ -84,12 +84,12 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
     community.members = community.members.filter((item: { userId: string; }) => item.userId !== userId);
     await community.save();
 
-    const user = await User.findOne({ userId: userId });
+    // const user = await User.findOne({ userId: userId });
 
-    if (!user) return;
+    // if (!user) return;
 
-    user.communities = user.communities.filter((item) => item.communityId !== orgId)
-    await user.save();
+    // user.communities = user.communities.filter((item) => item.communityId !== orgId)
+    // await user.save();
 
     revalidatePath("/community");
 
