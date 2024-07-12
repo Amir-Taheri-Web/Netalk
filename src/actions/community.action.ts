@@ -1,3 +1,5 @@
+"use server";
+
 import Community from "@/models/Community.model";
 import User from "@/models/User.model";
 import {
@@ -77,19 +79,23 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
   try {
     await connectDB();
 
-    const community = await Community.findOne({ communityId: orgId });
+    await Community.updateOne(
+      { communityId: orgId },
+      {
+        $pull: {
+          members: { userId: userId },
+        },
+      }
+    );
 
-    if (!community) return;
-
-    community.members = community.members.filter((item: { userId: string; }) => item.userId !== userId);
-    await community.save();
-
-    // const user = await User.findOne({ userId: userId });
-
-    // if (!user) return;
-
-    // user.communities = user.communities.filter((item) => item.communityId !== orgId)
-    // await user.save();
+    await User.updateOne(
+      { userId: userId },
+      {
+        $pull: {
+          communities: { communityId: orgId },
+        },
+      }
+    );
 
     revalidatePath("/community");
 
@@ -134,10 +140,36 @@ const deleteCommunity = async (
   }
 };
 
+const fetchCommunities = async (searchString: string) => {
+  try {
+    await connectDB();
+
+    const communities = await Community.find({
+      $or: [
+        { name: { $regex: searchString.trim(), $options: "i" } },
+        { slug: { $regex: searchString.trim(), $options: "i" } },
+      ],
+    });
+
+    const uniqueCommunities = Array.from(
+      new Set(communities.map((community) => community._id))
+    )
+      .map((id) => communities.find((community) => community._id === id))
+      .slice(0, 9);
+
+    revalidatePath("/communities");
+
+    return JSON.stringify(uniqueCommunities);
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
+
 export {
   addMemberToCommunity,
   createCommunity,
   deleteCommunity,
   removeUserFromCommunity,
   updateCommunityInfo,
+  fetchCommunities,
 };

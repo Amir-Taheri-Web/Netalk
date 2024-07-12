@@ -97,8 +97,8 @@ const fetchUsers = async (searchString: string) => {
 
     const users = await User.find({
       $or: [
-        { name: { $regex: searchString, $options: "i" } },
-        { username: { $regex: searchString, $options: "i" } },
+        { name: { $regex: searchString.trim(), $options: "i" } },
+        { username: { $regex: searchString.trim(), $options: "i" } },
       ],
     });
 

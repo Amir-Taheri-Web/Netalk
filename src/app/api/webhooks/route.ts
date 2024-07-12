@@ -70,7 +70,7 @@ export const POST = async (request: Request) => {
         id,
         name,
         slug,
-        image: logo_url || image_url,
+        image: image_url || logo_url,
         bio: "Organization bio",
         createdBy: created_by,
       });

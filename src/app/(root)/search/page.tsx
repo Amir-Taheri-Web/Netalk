@@ -1,6 +1,6 @@
 import SearchPage from "@/components/templates/SearchPage";
 
-const Search = async () => {
+const Search = () => {
   return <SearchPage />;
 };
 

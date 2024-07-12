@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { fetchUsers } from "@/actions/user.action";
 import searchIcon from "@/public/assets/search.svg";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Users from "@/modules/Users";
 import toast from "react-hot-toast";
+import { fetchCommunities } from "@/actions/community.action";
+import CommunitiesList from "@/modules/CommunitiesList";
 
-const SearchPage = () => {
+const CommunitiesPage = () => {
   const [searchString, setSearchString] = useState<string>("");
-  const [users, setUsers] = useState([]);
+  const [communities, setCommunities] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const getUsers = async () => {
+  const getCommunities = async () => {
     setIsLoading(true);
     try {
-      const data = await fetchUsers(searchString);
+      const data = await fetchCommunities(searchString);
       const finalData = JSON.parse(data as string);
-      setUsers(finalData);
+      setCommunities(finalData);
     } catch (error: any) {
       toast.error("Something went wrong. Try again");
       console.log(error.message);
@@ -28,18 +28,18 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    getUsers();
+    getCommunities();
   }, []);
 
   const searchHandler = async (e: any) => {
     e.preventDefault();
 
-    getUsers();
+    getCommunities();
   };
 
   return (
     <div className="max-w-[1000px] mx-auto flex flex-col gap-8">
-      <h2 className="main-title">Search Users</h2>
+      <h2 className="main-title">Communities</h2>
 
       <div className="flex flex-col gap-12">
         <form
@@ -52,7 +52,7 @@ const SearchPage = () => {
             className="bg-dark-3 flex-1 p-2 outline-none"
             name="searchString"
             value={searchString}
-            placeholder="Search users..."
+            placeholder="Search communities..."
             onChange={(e) => setSearchString(e.target.value)}
           />
 
@@ -62,11 +62,11 @@ const SearchPage = () => {
         </form>
 
         <div>
-          <Users users={users} isLoading={isLoading} />
+          <CommunitiesList communities={communities} isLoading={isLoading} />
         </div>
       </div>
     </div>
   );
 };
 
-export default SearchPage;
+export default CommunitiesPage;

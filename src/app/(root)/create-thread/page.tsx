@@ -1,6 +1,6 @@
 import CreateThreadPage from "@/components/templates/CreateThreadPage";
 
-const CreateThread = async () => {
+const CreateThread = () => {
   return <CreateThreadPage />;
 };
 

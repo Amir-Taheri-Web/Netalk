@@ -140,3 +140,8 @@ export interface ICommunity {
 }
 
 export type TCommunityModel = Model<ICommunity>;
+
+export type TCommunitiesListProps = {
+  communities: any;
+  isLoading: boolean;
+};
