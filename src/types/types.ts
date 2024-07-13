@@ -152,5 +152,18 @@ export type TCommunityDetailsProps = {
 };
 
 export type TCommunitiesDetailsPageProps = {
-  id: string;
+  community: any;
+};
+
+export type TCommunityTabsProps = {
+  threads: any;
+  members: any;
+  isOwner: boolean;
+  communityId: string;
+  communityBio: string;
+};
+
+export type TEditCommunityBioProps = {
+  communityId: string;
+  communityBio: string;
 };

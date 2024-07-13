@@ -1,6 +1,7 @@
 "use server";
 
 import Community from "@/models/Community.model";
+import Thread from "@/models/Thread.model";
 import User from "@/models/User.model";
 import {
   TCreateCommunityProps,
@@ -44,6 +45,7 @@ const createCommunity = async ({
     await owner.save();
 
     revalidatePath("/communities");
+    revalidatePath("/communities/[id]", "page");
 
     return newCommunity;
   } catch (error) {
@@ -70,6 +72,7 @@ const addMemberToCommunity = async (orgId: string, userId: string) => {
     await user.save();
 
     revalidatePath("/communities");
+    revalidatePath("/communities/[id]", "page");
 
     return { message: "Member added to community" };
   } catch (error) {
@@ -100,6 +103,7 @@ const removeUserFromCommunity = async (orgId: string, userId: string) => {
     );
 
     revalidatePath("/communities");
+    revalidatePath("/communities/[id]", "page");
 
     return { message: "Member removed from community" };
   } catch (error) {
@@ -119,6 +123,7 @@ const updateCommunityInfo = async ({
     await Community.updateOne({ communityId: id }, { name, slug, image });
 
     revalidatePath("/communities");
+    revalidatePath("/communities/[id]", "page");
 
     return { message: "Community updated" };
   } catch (error) {
@@ -139,6 +144,7 @@ const deleteCommunity = async (
     });
 
     revalidatePath("/communities");
+    revalidatePath("/communities/[id]", "page");
     return { message: "Community updated" };
   } catch (error) {
     console.log("Connection to server failed", error);
@@ -154,8 +160,7 @@ const fetchCommunities = async (searchString: string) => {
         { name: { $regex: searchString.trim(), $options: "i" } },
         { slug: { $regex: searchString.trim(), $options: "i" } },
       ],
-    })
-      .populate({path: "members", model: "User", select: "imageUrl"});
+    }).populate({ path: "members", model: "User", select: "imageUrl" });
 
     const uniqueCommunities = Array.from(
       new Set(communities.map((community) => community._id))
@@ -164,6 +169,7 @@ const fetchCommunities = async (searchString: string) => {
       .slice(0, 8);
 
     revalidatePath("/communities");
+    revalidatePath("/communities/[id]", "page");
 
     return JSON.stringify(uniqueCommunities);
   } catch (error) {
@@ -184,6 +190,72 @@ const fetchSuggestedCommunities = async () => {
   }
 };
 
+const fetchCommunity = async (id: string) => {
+  try {
+    await connectDB();
+
+    const community = await Community.findById(id)
+      .populate({
+        path: "threads",
+        populate: {
+          path: "community",
+          model: Community,
+          select: "_id name communityId slug image bio",
+        },
+      })
+      .populate({
+        path: "threads",
+        populate: {
+          path: "children",
+          populate: {
+            path: "community",
+            model: Community,
+            select: "_id name communityId slug image bio",
+          },
+        },
+      })
+      .populate({
+        path: "threads",
+        populate: {
+          path: "author",
+          model: User,
+          select: "_id userId username imageUrl",
+        },
+      })
+      .populate({
+        path: "threads",
+        populate: {
+          path: "children",
+          populate: {
+            path: "author",
+            model: User,
+            select: "_id userId username imageUrl",
+          },
+        },
+      })
+      .populate({ path: "members", model: User })
+      .populate({ path: "owner", model: User });
+
+    return community;
+  } catch (error) {
+    console.log("Connection to server lost", error);
+  }
+};
+
+const editCommunityBio = async (communityId: string, text: string) => {
+  try {
+    await connectDB();
+    const community = await Community.findOne({ communityId });
+    community.bio = text;
+    await community.save();
+
+    revalidatePath("/communities");
+    revalidatePath("/communities/[id]");
+  } catch (error) {
+    console.log("Connection to server failed", error);
+  }
+};
+
 export {
   addMemberToCommunity,
   createCommunity,
@@ -192,4 +264,6 @@ export {
   updateCommunityInfo,
   fetchCommunities,
   fetchSuggestedCommunities,
+  fetchCommunity,
+  editCommunityBio,
 };

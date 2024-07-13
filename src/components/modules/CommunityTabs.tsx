@@ -2,17 +2,20 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Image from "next/image";
 import threadsIcon from "@/public/assets/reply-tab.svg";
-import repliesIcon from "@/public/assets/request-tab.svg";
+import membersIcon from "@/public/assets/members.svg";
 import editIcon from "@/public/assets/edit.svg";
-import { TProfileTabsProps } from "@/types/types";
-import { FC, Key } from "react";
+import { TCommunityTabsProps } from "@/types/types";
+import { FC } from "react";
 import ThreadCard from "./ThreadCard";
-import OnboardingPage from "../templates/OnboardingPage";
+import Users from "./Users";
+import EditCommunityBio from "./EditCommunityBio";
 
-const ProfileTabs: FC<TProfileTabsProps> = async ({
-  mainThreads,
-  replyThreads,
-  userInfo,
+const CommunityTabs: FC<TCommunityTabsProps> = async ({
+  threads,
+  members,
+  isOwner,
+  communityId,
+  communityBio,
 }) => {
   return (
     <>
@@ -31,18 +34,19 @@ const ProfileTabs: FC<TProfileTabsProps> = async ({
             <span className="max-md:hidden">Threads</span>
           </TabsTrigger>
           <TabsTrigger
-            value="replies"
+            value="members"
             className="flex items-center gap-2 bg-dark-2 border-dark-2 text-white flex-1 data-[state=active]:bg-dark-3 data-[state=active]:text-white"
           >
             <Image
-              src={repliesIcon}
-              alt="replies icon"
+              src={membersIcon}
+              alt="members icon"
               width={20}
               height={20}
             />
-            <span className="max-md:hidden">Replies</span>
+            <span className="max-md:hidden">Members</span>
           </TabsTrigger>
-          {userInfo && (
+
+          {isOwner && (
             <TabsTrigger
               value="edit"
               className="flex items-center gap-2 bg-dark-2 border-dark-2 text-white flex-1 data-[state=active]:bg-dark-3 data-[state=active]:text-white"
@@ -54,32 +58,37 @@ const ProfileTabs: FC<TProfileTabsProps> = async ({
         </TabsList>
 
         <TabsContent value="threads">
-          {mainThreads.length < 1 && (
+          {threads.length < 1 && (
             <p className="text-white font-semibold text-2xl">No threads</p>
           )}
 
           <ul className="flex flex-col gap-12">
-            {mainThreads.map((item: { _id: Key | null | undefined }) => (
-              <ThreadCard key={item._id} thread={item} />
+            {threads.map((item: any) => (
+              <ThreadCard
+                key={item._id}
+                thread={item}
+                isProfilePage={item.parentId ? true : false}
+              />
             ))}
           </ul>
         </TabsContent>
 
-        <TabsContent value="replies">
-          {replyThreads.length < 1 && (
-            <p className="text-white font-semibold text-2xl">No replies</p>
+        <TabsContent value="members">
+          {members.length < 1 && (
+            <p className="text-white font-semibold text-2xl">
+              There are no members for this community
+            </p>
           )}
 
-          <ul className="flex flex-col gap-12">
-            {replyThreads.map((item: { _id: Key | null | undefined }) => (
-              <ThreadCard key={item._id} thread={item} isProfilePage={true} />
-            ))}
-          </ul>
+          <Users users={members} isLoading={false} />
         </TabsContent>
 
-        {userInfo && (
+        {isOwner && (
           <TabsContent value="edit">
-            <OnboardingPage userInfo={userInfo} isEdit={true} />
+            <EditCommunityBio
+              communityId={communityId}
+              communityBio={communityBio}
+            />
           </TabsContent>
         )}
       </Tabs>
@@ -87,4 +96,4 @@ const ProfileTabs: FC<TProfileTabsProps> = async ({
   );
 };
 
-export default ProfileTabs;
+export default CommunityTabs;

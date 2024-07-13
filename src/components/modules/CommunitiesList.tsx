@@ -32,9 +32,7 @@ const CommunitiesList: FC<TCommunitiesListProps> = ({
             </div>
           </div>
 
-          <div>
-            <p className="text-gray-1">{item.bio}</p>
-          </div>
+            <p className="text-gray-1 whitespace-nowrap overflow-hidden text-ellipsis w-full">{item.bio}</p>
 
           <div className="w-full flex items-center justify-between gap-4">
             {item.members.length > 0 && (
