@@ -1,19 +1,13 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { useOrganization, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { threadValidation } from "@/validations/thread.validation";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Loader from "./Loader";
 import { FC, useState } from "react";
@@ -24,6 +18,7 @@ import { cn } from "@/lib/utils";
 
 const PostComment: FC<TPostCommentProps> = ({ parentId }) => {
   const { user, isLoaded } = useUser();
+  const { organization } = useOrganization();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof threadValidation>>({
@@ -40,6 +35,7 @@ const PostComment: FC<TPostCommentProps> = ({ parentId }) => {
         userId: user?.id || "",
         text: values.content,
         parentId,
+        orgId: organization?.id || "",
       });
 
       form.reset();
@@ -58,7 +54,7 @@ const PostComment: FC<TPostCommentProps> = ({ parentId }) => {
   return (
     <div className="flex gap-4 items-center w-full py-4 border-y-[1px] border-dark-4 border-opacity-80">
       <Image
-        src={user?.imageUrl as string}
+        src={organization ? organization.imageUrl : (user?.imageUrl as string)}
         alt="avatar"
         width={100}
         height={100}

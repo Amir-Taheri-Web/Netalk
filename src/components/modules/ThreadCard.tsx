@@ -20,13 +20,24 @@ const ThreadCard: FC<TThreadCardProps> = ({
     >
       <div className="flex gap-4">
         <div className="flex flex-col gap-2 items-center">
-          <Link href={`/profile/${thread.author.userId}`} prefetch={false}>
+          <Link
+            href={
+              thread.community
+                ? `/communities/${thread.community._id}`
+                : `/profile/${thread.author.userId}`
+            }
+            prefetch={false}
+          >
             {" "}
             <Image
-              src={thread.author.imageUrl}
+              src={
+                thread.community
+                  ? thread.community.image
+                  : thread.author.imageUrl
+              }
               alt="author image"
-              width={55}
-              height={55}
+              width={100}
+              height={100}
               className="rounded-full w-[55px] h-[55px] object-cover max-sm:w-[40px] max-sm:h-[40px]"
             />
           </Link>
@@ -42,8 +53,17 @@ const ThreadCard: FC<TThreadCardProps> = ({
         >
           <div className="flex items-center gap-4">
             <h4 className="font-bold">
-              <Link href={`/profile/${thread.author.userId}`} prefetch={false}>
-                {thread.author.username}
+              <Link
+                href={
+                  thread.community
+                    ? `/communities/${thread.community._id}`
+                    : `/profile/${thread.author.userId}`
+                }
+                prefetch={false}
+              >
+                {thread.community
+                  ? thread.community.name
+                  : thread.author.username}
               </Link>
             </h4>
 
@@ -77,10 +97,14 @@ const ThreadCard: FC<TThreadCardProps> = ({
                   return (
                     <Image
                       key={item._id}
-                      src={item.author?.imageUrl}
+                      src={
+                        item.community
+                          ? item.community.image
+                          : item.author?.imageUrl
+                      }
                       alt="reply image"
-                      width={30}
-                      height={30}
+                      width={60}
+                      height={60}
                       className="rounded-full object-cover w-[30px] h-[30px] relative"
                       style={{ left: `-${index * 10}px` }}
                     />

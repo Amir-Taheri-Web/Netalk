@@ -1,12 +1,18 @@
 "use server";
 
+import Community from "@/models/Community.model";
 import Thread from "@/models/Thread.model";
 import User from "@/models/User.model";
 import { TCreateThreadProps } from "@/types/types";
 import connectDB from "@/utils/connectDB";
 import { revalidatePath } from "next/cache";
 
-const createThread = async ({ userId, text, parentId }: TCreateThreadProps) => {
+const createThread = async ({
+  userId,
+  text,
+  parentId,
+  orgId,
+}: TCreateThreadProps) => {
   try {
     await connectDB();
 
@@ -26,6 +32,15 @@ const createThread = async ({ userId, text, parentId }: TCreateThreadProps) => {
       parentThread.children.push(newThread);
       await parentThread.save();
       revalidatePath(`/thread/${userId}`);
+    }
+
+    if (orgId) {
+      const threadCommunity = await Community.findOne({ communityId: orgId });
+      threadCommunity.threads.push(newThread);
+      await threadCommunity.save();
+
+      newThread.community = threadCommunity;
+      await newThread.save();
     }
 
     revalidatePath("/");
@@ -56,6 +71,19 @@ const fetchThreads = async (amount: number, skipAmount: number) => {
           model: User,
           select: "_id username imageUrl",
         },
+      })
+      .populate({
+        path: "children",
+        populate: {
+          path: "community",
+          model: Community,
+          select: "_id communityId image name",
+        },
+      })
+      .populate({
+        path: "community",
+        model: Community,
+        select: "_id communityId image name",
       });
 
     const threadCount = await Thread.countDocuments({
@@ -87,6 +115,19 @@ const fetchThread = async (id: string) => {
           model: User,
           select: "_id userId username imageUrl",
         },
+      })
+      .populate({
+        path: "children",
+        populate: {
+          path: "community",
+          model: Community,
+          select: "_id communityId image name",
+        },
+      })
+      .populate({
+        path: "community",
+        model: Community,
+        select: "_id communityId image name",
       });
 
     thread.children.reverse();

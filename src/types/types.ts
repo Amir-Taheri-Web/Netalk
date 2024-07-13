@@ -59,6 +59,7 @@ export type TCreateThreadProps = {
   userId: string;
   text: string;
   parentId?: string;
+  orgId?: string;
 };
 
 export type TThreadCardProps = {

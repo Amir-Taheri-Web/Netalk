@@ -5,7 +5,7 @@ import ThreadCard from "./ThreadCard";
 const ThreadComments: FC<TThreadCommentsProps> = ({ childThreads }) => {
   return (
     <ul className="flex flex-col max-sm:mb-8">
-      {childThreads.map((item: { _id: Key | null | undefined; }) => (
+      {childThreads.map((item: any) => (
         <ThreadCard key={item._id} thread={item} isComment={true} />
       ))}
     </ul>

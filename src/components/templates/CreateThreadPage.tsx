@@ -17,12 +17,13 @@ import { Textarea } from "../ui/textarea";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { createThread } from "@/actions/thread.action";
-import { useUser } from "@clerk/nextjs";
+import { useOrganization, useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
 
 const CreateThreadPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { user } = useUser();
+  const { organization } = useOrganization();
 
   const form = useForm<z.infer<typeof threadValidation>>({
     resolver: zodResolver(threadValidation),
@@ -35,7 +36,11 @@ const CreateThreadPage = () => {
     setIsLoading(true);
 
     try {
-      await createThread({ userId: user?.id || "", text: values.content });
+      await createThread({
+        userId: user?.id || "",
+        text: values.content,
+        orgId: organization?.id || "",
+      });
 
       toast.success("Thread created");
       form.reset();
