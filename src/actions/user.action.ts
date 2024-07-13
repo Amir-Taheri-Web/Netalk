@@ -50,11 +50,30 @@ const getUser = async (userId: string) => {
       .populate({
         path: "threads",
         populate: {
+          path: "community",
+          model: Community,
+          select: "_id communityId name slug image",
+        },
+      })
+      .populate({
+        path: "threads",
+        populate: {
           path: "children",
           populate: {
             path: "author",
             model: User,
             select: "_id userId username imageUrl",
+          },
+        },
+      })
+      .populate({
+        path: "threads",
+        populate: {
+          path: "children",
+          populate: {
+            path: "community",
+            model: Community,
+            select: "_id communityId name slug image",
           },
         },
       })
