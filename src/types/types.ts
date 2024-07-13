@@ -150,3 +150,7 @@ export type TCommunitiesListProps = {
 export type TCommunityDetailsProps = {
   params: { id: string };
 };
+
+export type TCommunitiesDetailsPageProps = {
+  id: string;
+};
